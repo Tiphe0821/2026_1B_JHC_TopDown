@@ -5,16 +5,17 @@ using ooparts.dungen;
 
 namespace ooparts.dungen
 {
-	public class Room : MonoBehaviour
+	public class Room : MonoBehaviour				// Map에서 처음 호출되는 맵 cs 파일 
 	{
-		public Corridor CorridorPrefab;
-		public IntVector2 Size;
-		public IntVector2 Coordinates;
-		public int Num;
+		public Corridor CorridorPrefab;				// 복도 프리팩
+		public IntVector2 Size;						// 자기 사이즈
+		public IntVector2 Coordinates;				// 자기 위치
+		public int Num;								// ---- ? 숫자?
 
-		private GameObject _tilesObject;
-		private GameObject _wallsObject;
-		private GameObject _monstersObject;
+													// - 일단 무시하자
+		private GameObject _tilesObject;			// 타일 오브젝트? 
+		private GameObject _wallsObject;			// 벽 오브젝트?
+		private GameObject _monstersObject;			// 몬스터 오브젝트?
 		public Tile TilePrefab;
 		private Tile[,] _tiles;
 		public GameObject WallPrefab;
@@ -30,12 +31,12 @@ namespace ooparts.dungen
 		public int MonsterCount;
 		private GameObject[] Monsters;
 
-		public void Init(Map map)
+		public void Init(Map map)			// init? 
 		{
 			_map = map;
 		}
 
-		public IEnumerator Generate()
+		public IEnumerator Generate()			// 코루틴? 어디서 호출되는거지?
 		{
 			// Create parent object
 			_tilesObject = new GameObject("Tiles");

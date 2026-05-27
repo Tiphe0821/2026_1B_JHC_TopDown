@@ -6,17 +6,17 @@ using System.Diagnostics;
 using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
 using ooparts.dungen;
-
-namespace ooparts.dungen
+								// Start 함수가 없다? - 대신 다른곳에서 호출되는 듯한 함수가 잔뜩 있다
+namespace ooparts.dungen		// RoomMapManager.cs 의 Start->BeginGame() 로 호출되서 생성됨
 {
 	[System.Serializable]
-	public struct MinMax
+	public struct MinMax		// 구조체 타입으로 최소값과 최대값을 만들어둔다 (왜?) (추측 : 방 최소 최대 개수?)
 	{
 		public int Min;
 		public int Max;
 	}
 
-	public enum TileType
+	public enum TileType		// 타일의 타입을 Enum 으로 받는다 
 	{
 		Empty,
 		Room,
@@ -52,24 +52,24 @@ namespace ooparts.dungen
 
 
 		// Generate Rooms and Corridors
-		public IEnumerator Generate()
+		public IEnumerator Generate()					// 코루틴 사용..? // 잠깐만요 이거 뭐에요
 		{
-			Stopwatch stopwatch = new Stopwatch();
-			stopwatch.Start();
+			Stopwatch stopwatch = new Stopwatch();		// 스탑워치 생성
+			stopwatch.Start();							// 스탑워치 활성화
 
 			{
-				_tilesTypes = new TileType[MapSize.x, MapSize.z];
+				_tilesTypes = new TileType[MapSize.x, MapSize.z];		// 방에 있는 타일이 어떤 타입일지 정하는 듯 하다
 				_rooms = new List<Room>();
 
 				// Generate Rooms
-				for (int i = 0; i < RoomCount; i++)
+				for (int i = 0; i < RoomCount; i++)						// 방 개수보다 적게 방을 만들어낸다?
 				{
-					Room roomInstance = CreateRoom();
-					if (roomInstance == null)
+					Room roomInstance = CreateRoom();					// 방 인스턴스를 만들어낸다 - Room 클래스가 뭐지?
+					if (roomInstance == null)								// 만약 룸 인스턴스가 존재하지 않는다면? - 예외처리
 					{
-						RoomCount = _rooms.Count;
-						Debug.Log("Cannot make more rooms!");
-						Debug.Log("Created Rooms : " + RoomCount);
+						RoomCount = _rooms.Count;						// 방 카운트를 위에 만든 리스트의 길이만큼 만든다
+						Debug.Log("Cannot make more rooms!");			// 방을 더 만든 수 없다고 로그 띄우기
+						Debug.Log("Created Rooms : " + RoomCount);		// 방이 몇개 만들어졌는지 알려주기
 						break;
 					}
 					roomInstance.Setting = RoomSettings[Random.Range(0, RoomSettings.Length)];
@@ -158,40 +158,40 @@ namespace ooparts.dungen
 			return false;
 		}
 
-		private Room CreateRoom()
+		private Room CreateRoom()					// 맵이 만들어질 때 호출되는 방 생성 함수
 		{
-			Room newRoom = null;
+			Room newRoom = null;					// 빈 값으로 방을 선언한다
 
 			// Try as many as we can.
 			for (int i = 0; i < RoomCount * RoomCount; i++)
 			{
-				IntVector2 size = new IntVector2(Random.Range(RoomSize.Min, RoomSize.Max + 1), Random.Range(RoomSize.Min, RoomSize.Max + 1));
-				IntVector2 coordinates = new IntVector2(Random.Range(1, MapSize.x - size.x), Random.Range(1, MapSize.z - size.z));
-				if (!IsOverlapped(size, coordinates))
+				IntVector2 size = new IntVector2(Random.Range(RoomSize.Min, RoomSize.Max + 1), Random.Range(RoomSize.Min, RoomSize.Max + 1));		 // 랜덤 사이즈 설정
+				IntVector2 coordinates = new IntVector2(Random.Range(1, MapSize.x - size.x), Random.Range(1, MapSize.z - size.z));					// 랜덤 좌표 설정
+				if (!IsOverlapped(size, coordinates))			// 방이 겹치는지 확인하고 겹치지 않는다면 들여보낸다
 				{
-					newRoom = Instantiate(RoomPrefab);
-					_rooms.Add(newRoom);
-					newRoom.Num = _rooms.Count;
-					newRoom.name = "Room " + newRoom.Num + " (" + coordinates.x + ", " + coordinates.z + ")";
-					newRoom.Size = size;
-					newRoom.Coordinates = coordinates;
-					newRoom.transform.parent = transform;
+					newRoom = Instantiate(RoomPrefab);			// 방을 만든다
+					_rooms.Add(newRoom);						// 리스트에 방을 추가
+					newRoom.Num = _rooms.Count;					// 방 객체의 넘버 값을 조정
+					newRoom.name = "Room " + newRoom.Num + " (" + coordinates.x + ", " + coordinates.z + ")";		// 오브젝트 이름 수정 - 위치 표기
+					newRoom.Size = size;						// 사이즈 설정?
+					newRoom.Coordinates = coordinates;			// 좌표 설정
+					newRoom.transform.parent = transform;		// 부모 좌표 설정
 					Vector3 position = CoordinatesToPosition(coordinates);
-					position.x += size.x * 0.5f - 0.5f;
+					position.x += size.x * 0.5f - 0.5f;			
 					position.z += size.z * 0.5f - 0.5f;
-					position *= RoomMapManager.TileSize;
-					newRoom.transform.localPosition = position;
-					newRoom.Init(this);
-					break;
+					position *= RoomMapManager.TileSize;		// 포지션에 타일 사이즈를 곱한다
+					newRoom.transform.localPosition = position;	// 정해진 위치로 방을 이동시킨다
+					newRoom.Init(this);							// 방에게 방이 어떤 맵에 포함되어 있는지 알려준다
+					break;										// 루프 나가기 -> 결과적으로 해당 포문 안에서 만들어지는 방은 하나다
 				}
 			}
 
 			if (newRoom == null)
 			{
-				Debug.LogError("Too many rooms in map!! : " + _rooms.Count);
+				Debug.LogError("Too many rooms in map!! : " + _rooms.Count);			// 방이 너무 많을 경우
 			}
 
-			return newRoom;
+			return newRoom;																// 그렇게 만들어진 방을 리턴한다
 		}
 
 		public IntVector2 RandomCoordinates
@@ -204,7 +204,7 @@ namespace ooparts.dungen
 			foreach (Room room in _rooms)
 			{
 				// Give a little space between two rooms
-				if (Mathf.Abs(room.Coordinates.x - coordinates.x + (room.Size.x - size.x) * 0.5f) < (room.Size.x + size.x) * 0.7f &&
+				if (Mathf.Abs(room.Coordinates.x - coordinates.x + (room.Size.x - size.x) * 0.5f) < (room.Size.x + size.x) * 0.7f &&			// 절대값 반환. 무언가를 확인한다?
 					Mathf.Abs(room.Coordinates.z - coordinates.z + (room.Size.z - size.z) * 0.5f) < (room.Size.z + size.z) * 0.7f)
 				{
 					return true;
@@ -392,7 +392,7 @@ namespace ooparts.dungen
 			yield return null;
 		}
 
-		public Vector3 CoordinatesToPosition(IntVector2 coordinates)
+		public Vector3 CoordinatesToPosition(IntVector2 coordinates)			//  방의 좌표를 설정하는 함수?
 		{
 			return new Vector3(coordinates.x - MapSize.x * 0.5f + 0.5f, 0f, coordinates.z - MapSize.z * 0.5f + 0.5f);
 		}
