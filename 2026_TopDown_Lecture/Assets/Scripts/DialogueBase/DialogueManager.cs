@@ -98,7 +98,7 @@ public class DialogueManager : MonoBehaviour
         // 마지막 대화였는지 확인
         if(currentLineIndex >= currentDialogue.dialogueLines.Count)
         {
-            
+            EndDialogue();
         }
         else
         {
