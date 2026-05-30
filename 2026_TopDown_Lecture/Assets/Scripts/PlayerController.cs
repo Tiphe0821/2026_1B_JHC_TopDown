@@ -3,12 +3,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 5.0f;
+    public float moveSpeed = 0.8f;
+    public float sprintSpeed = 1.5f;
     public Sprite[] spriteRightUp;
     public Sprite[] spriteRightDown;
     public Sprite[] spriteLeftUp;
     public Sprite[] spriteLeftDown;
-    public float frameTime = 0.15f;
+    public float frameTime = 0.2f;
+    public float runFrameTime = 0.1f;
     private Rigidbody2D rb;
     private SpriteRenderer sr;
     private Vector2 moveInput;
@@ -17,6 +19,8 @@ public class PlayerController : MonoBehaviour
     private Sprite[] currentSprites;
     private int frameIndex = 0;
     private float timer = 0f;
+
+    private float isSprint;
 
     private Camera mainCamera;
 
@@ -92,6 +96,13 @@ public class PlayerController : MonoBehaviour
 
         
     }
+
+    private void OnSprint(InputValue value)
+    {
+        isSprint = value.Get<float>();
+        Debug.Log(isSprint);
+    }
+
 
     // Update is called once per frame
     void Update()
