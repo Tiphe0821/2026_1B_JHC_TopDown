@@ -2492,22 +2492,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 0.8
-  spriteUp:
+  spriteRightUp:
   - {fileID: 21300000, guid: ba8dd890413d7994898c7ffa8da7b3cc, type: 3}
-  - {fileID: 21300000, guid: 0b0216110e1631342acb0ea4fa1cd507, type: 3}
-  - {fileID: 21300000, guid: 05e2dff2268b1f84c83fef0c539600a6, type: 3}
-  spriteDown:
-  - {fileID: 21300000, guid: 558e1614918f3674bbdb0913ee03c125, type: 3}
-  - {fileID: 21300000, guid: 4f373b31e12d0664296176b48ae5ca20, type: 3}
-  - {fileID: 21300000, guid: 672f2f8a58a97d541bce5c38e44952a3, type: 3}
-  spriteLeft:
-  - {fileID: 21300000, guid: 4d437ded76f617344b776e269f951f1c, type: 3}
-  - {fileID: 21300000, guid: 0214d7dcd0ace1d45b7fd0e5f6faca38, type: 3}
-  - {fileID: 21300000, guid: e329c66eafbf4b246817d8c992a69a8f, type: 3}
-  spriteRight:
+  spriteRightDown:
   - {fileID: 21300000, guid: 19c052d7140def64c92d7adc7b6dd798, type: 3}
-  - {fileID: 21300000, guid: a25239b9d763e904095ba695f85ccb27, type: 3}
-  - {fileID: 21300000, guid: 6b6d5baa0df25e645ac88137ac46fd10, type: 3}
+  spriteLeftUp:
+  - {fileID: 21300000, guid: 4d437ded76f617344b776e269f951f1c, type: 3}
+  spriteLeftDown:
+  - {fileID: 21300000, guid: 558e1614918f3674bbdb0913ee03c125, type: 3}
   frameTime: 0.15
 --- !u!4 &1650355757
 Transform:
