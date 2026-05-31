@@ -1,15 +1,15 @@
 {
     "version": 1,
-    "name": "MyInputAction",
+    "name": "MyInputSystem",
     "maps": [
         {
             "name": "Player",
-            "id": "c49cfb95-9e3b-4bd6-9945-0ad35071df73",
+            "id": "aa6fd12b-e412-4ae5-a7a6-7c081a562336",
             "actions": [
                 {
                     "name": "Move",
                     "type": "Value",
-                    "id": "c6ad4da8-7af6-46f4-ba0e-481432d8127d",
+                    "id": "5c26a364-371a-42bd-ac39-3c84edb3691d",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -18,7 +18,7 @@
                 {
                     "name": "Look",
                     "type": "Value",
-                    "id": "9bf642d4-af93-4b39-9a31-a59259750952",
+                    "id": "5113700f-d902-45c4-96f0-1f401d8b6005",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -27,7 +27,7 @@
                 {
                     "name": "Sprint",
                     "type": "Button",
-                    "id": "aeb1560f-8520-47f6-a2bb-d9da95ac2c26",
+                    "id": "c95704b0-d69f-4f8b-8f64-2b2f840dc801",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -36,8 +36,8 @@
             ],
             "bindings": [
                 {
-                    "name": "WASD_Arrows",
-                    "id": "519dc2eb-772c-4603-a7f7-6fd0abdfeec0",
+                    "name": "2D Vector",
+                    "id": "ba72d4d3-0931-4cc3-b17f-1a95da62f157",
                     "path": "2DVector",
                     "interactions": "",
                     "processors": "",
@@ -48,72 +48,117 @@
                 },
                 {
                     "name": "up",
-                    "id": "e7fdaef0-8fa9-478e-87b2-ab6702783bfa",
+                    "id": "5faf0351-9da6-48fc-a825-18e9507c79d2",
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";myContolScheme",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "down",
-                    "id": "95959db9-7386-492d-9424-8c46fbff799b",
+                    "id": "03534341-f5a4-4831-804a-1061cf45a622",
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";myContolScheme",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "left",
-                    "id": "67b0feb2-23e6-4042-b24e-798ef1ed458d",
+                    "id": "6408e759-8e4a-45d8-86fa-4f4cc3fb3a00",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";myContolScheme",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "right",
-                    "id": "d7a7466b-c0e6-41e8-9ee8-0ba6b131a5c8",
+                    "id": "59d54487-6736-4ba7-8904-081d94eaca1d",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";myContolScheme",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "",
-                    "id": "4b5e8f9d-e197-48b4-9efe-deb7e3f918b7",
+                    "id": "c987b28e-8c66-4e9a-9b54-7a7ba9c54e33",
                     "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";myContolScheme",
                     "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "b78d997b-9bed-4579-8dd1-b39379cb8f9a",
+                    "id": "c6b1a634-1c6d-4453-b508-0d9dbb61725a",
                     "path": "<Keyboard>/space",
                     "interactions": "Press(behavior=2)",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";myContolScheme",
                     "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "UI",
+            "id": "3402acf8-cb4c-4ee4-85cb-d3cf12e5f93c",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "51a391b0-7db2-4cbf-a3f9-b65ca83585a2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "33538440-2c10-45ee-91d8-5da531a2c600",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
             ]
         }
     ],
-    "controlSchemes": []
+    "controlSchemes": [
+        {
+            "name": "myContolScheme",
+            "bindingGroup": "myContolScheme",
+            "devices": [
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
 }

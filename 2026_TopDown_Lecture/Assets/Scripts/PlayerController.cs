@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    //플레이어 움직임 구현
+
     public float moveSpeed = 0.8f;
     public float sprintSpeed = 1.5f;
     public Sprite[] spriteRightUp;
@@ -23,6 +25,25 @@ public class PlayerController : MonoBehaviour
     private float isSprint;
 
     private Camera mainCamera;
+
+    // 플레이어 캐릭터가 보는 위치 단위벡터
+    private Vector2 lookDir;
+
+    [Header("달리기 & 대시 설정")]
+    // 달리기 & 대시 구현
+
+    private Vector2 dashVelocity;
+    private bool isDashing = false;
+    public bool isInCombat = false;
+    public bool isDashed = false;
+    public float dashSpeed = 2.0f;
+    private float lastDash = 0f;
+    private float dashCooldown = 1.5f;
+
+    [Header("무기 설정")]
+    // 무기 구현
+    public GameObject weapon;
+
 
     private void Awake()
     {
@@ -94,13 +115,26 @@ public class PlayerController : MonoBehaviour
                 ChangeSprites(spriteLeftDown);
         }
 
+        // 플레이어가 움직일 때 무기도 같이 플레이어가 보는 방향을 바라봐야 한다
+        // 위 값에서 플레이어로부터 마우스를 보는 단위벡터를 구하자
+        // 둘 모두 원점에서 시작한 벡터값 기준이다. 그러니 마우스의 위치에서 플레이어의 위치 값을 빼면 플레이어 캐릭터가 바라보는 벡터값이 나온다
+
+        lookDir = (worldMouseInput - new Vector2(transform.position.x, transform.position.y)).normalized;   // 플레이어가 보는 방향
         
     }
 
     private void OnSprint(InputValue value)
     {
         isSprint = value.Get<float>();
-        Debug.Log(isSprint);
+        
+        if(isSprint > 0.01f && !isDashed)
+        {
+            // 대시할 방향 받기
+            dashVelocity = velocity.normalized * dashSpeed;
+            isDashing = true;
+            isDashed = true;                                        // 왜 bool 값을 넣었지? 쿨타임 구현 + 연속 대시 기능을 넣을 예정이기에
+            lastDash = Time.time;
+        }
     }
 
 
@@ -126,11 +160,24 @@ public class PlayerController : MonoBehaviour
 
             sr.sprite = currentSprites[frameIndex];
         }
+
+        if (lastDash + dashCooldown <= Time.time)
+            isDashed = false;
     }
 
     private void FixedUpdate()
     {
-        rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
+        if(isDashing)
+        {
+            rb.MovePosition(rb.position + dashVelocity * Time.fixedDeltaTime);      //  대시 사용
+            if (lastDash + 0.1f <= Time.time)
+                isDashing = false;
+        }
+        else
+        {
+            rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);      //  달리지 않을 경우
+        }
+
     }
 
     private void ChangeSprites(Sprite[] newSprites)
