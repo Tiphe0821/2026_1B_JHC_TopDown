@@ -43,7 +43,10 @@ public class PlayerController : MonoBehaviour
     [Header("무기 설정")]
     // 무기 구현
     public GameObject weapon;
-
+    // 무기가 보는 방향 (왼쪽 오른쪽 정하기)
+    public bool isLookRight = true;
+    public bool isLookUp = true;
+    public float myWeaponAngle;
 
     private void Awake()
     {
@@ -102,17 +105,33 @@ public class PlayerController : MonoBehaviour
 
         if(worldMouseInput.x > this.transform.position.x)       // 위랑 다르게 예외처리 따로 안하는 이유. -> 굳이? 마우스 포지션 + 플레이어 캐릭터 포지션 기반이라 예외처리가 필요 없을 것 같다
         {
+            isLookRight = true;
+
             if(worldMouseInput.y > this.transform.position.y)
+            {
+                isLookUp = true;
                 ChangeSprites(spriteRightUp);
+            }
             else
+            {
+                isLookUp = false;
                 ChangeSprites(spriteRightDown);
+            }
         }
         else
         {
+            isLookRight = false;
+
             if (worldMouseInput.y > this.transform.position.y)
+            {
+                isLookUp = true;
                 ChangeSprites(spriteLeftUp);
+            }
             else
+            {
+                isLookUp = false;
                 ChangeSprites(spriteLeftDown);
+            }
         }
 
         // 플레이어가 움직일 때 무기도 같이 플레이어가 보는 방향을 바라봐야 한다
@@ -120,7 +139,7 @@ public class PlayerController : MonoBehaviour
         // 둘 모두 원점에서 시작한 벡터값 기준이다. 그러니 마우스의 위치에서 플레이어의 위치 값을 빼면 플레이어 캐릭터가 바라보는 벡터값이 나온다
 
         lookDir = (worldMouseInput - new Vector2(transform.position.x, transform.position.y)).normalized;   // 플레이어가 보는 방향
-        
+        CalculateWeaponAngle();
     }
 
     private void OnSprint(InputValue value)
@@ -163,6 +182,8 @@ public class PlayerController : MonoBehaviour
 
         if (lastDash + dashCooldown <= Time.time)
             isDashed = false;
+
+        
     }
 
     private void FixedUpdate()
@@ -189,6 +210,36 @@ public class PlayerController : MonoBehaviour
         frameIndex = 0;
         timer = 0f;
         sr.sprite = currentSprites[frameIndex];
+
+    }
+
+    private void CalculateWeaponAngle()
+    {
+
+        // 플레이어 자체를 돌아가도록 만드는 임시 함수
+        // 단위벡터 2개 (하나는 마우스가 가리키는 방향의 단위벡터, 다른 하나는 lookdir.x, 0 가 된다)
+        /*
+        myWeaponAngle = Mathf.Acos((lookDir.x * lookDir.x) / (Mathf.Abs(lookDir.magnitude) * Mathf.Abs(lookDir.x)));
+        this.transform.rotation = Quaternion.Euler(0f, 0f, ((isLookUp) ? 1.0f : -1.0f) * Mathf.Rad2Deg * myWeaponAngle);
+
+        if (!isLookRight)
+        {
+            this.transform.rotation = Quaternion.Euler(0f, 0f, 180f -((isLookUp) ? 1.0f : -1.0f) * Mathf.Rad2Deg * myWeaponAngle);
+        }
+        */
+        // 이제 이걸 무기에 적용시켜보자
+        myWeaponAngle = Mathf.Acos((lookDir.x * lookDir.x) / (Mathf.Abs(lookDir.magnitude) * Mathf.Abs(lookDir.x)));
+        weapon.transform.rotation = Quaternion.Euler(0f, 0f, ((isLookUp) ? 1.0f : -1.0f) * Mathf.Rad2Deg * myWeaponAngle);
+
+        if (!isLookRight)
+        {
+            transform.localScale = new Vector3(-1f, 1f, 1f);
+            weapon.transform.rotation = Quaternion.Euler(0f, 0f, - ((isLookUp) ? 1.0f : -1.0f) * Mathf.Rad2Deg * myWeaponAngle);
+        }
+        else
+        {
+            transform.localScale = Vector3.one;
+        }
 
     }
 }
