@@ -228,8 +228,8 @@ public class PlayerController : MonoBehaviour
         }
         */
         // 이제 이걸 무기에 적용시켜보자
+
         myWeaponAngle = Mathf.Acos((lookDir.x * lookDir.x) / (Mathf.Abs(lookDir.magnitude) * Mathf.Abs(lookDir.x)));
-        weapon.transform.rotation = Quaternion.Euler(0f, 0f, ((isLookUp) ? 1.0f : -1.0f) * Mathf.Rad2Deg * myWeaponAngle);
 
         if (!isLookRight)
         {
@@ -239,6 +239,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             transform.localScale = Vector3.one;
+            weapon.transform.rotation = Quaternion.Euler(0f, 0f, ((isLookUp) ? 1.0f : -1.0f) * Mathf.Rad2Deg * myWeaponAngle);
         }
 
     }
