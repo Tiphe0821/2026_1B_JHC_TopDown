@@ -40,16 +40,27 @@ public class PlayerController : MonoBehaviour
     private float lastDash = 0f;
     private float dashCooldown = 1.5f;
 
+    [Header("공격 설정")]
+
+    public float isAttacking;        // 공격을 하고있는지 확인
+    public float attackMoveRange;           // 공격 시 미세하게 앞으로 움직이는 속도 (콤보 구현 시 개선 예정)
+    public int currentCombo = 0;            // 현재 콤보 (몇번째 연속 공격인지)
+    public float attackDuration;            // 공격 지속시간
+
     [Header("무기 설정")]
     // 무기 구현
-    public GameObject weapon;
+    public GameObject weapon;       // 무기의 부모로 할당되어 있는 게임 오브젝트
     // 무기가 보는 방향 (왼쪽 오른쪽 정하기)
     public bool isLookRight = true;
     public bool isLookUp = true;
     public float myWeaponAngle;
 
+    public MyWeapon myWeapon;       // 무기에 직접적으로 연결된 스크립트 받아오기
+
     private void Awake()
     {
+        // 스크립트 상에서 자식의 자식에 있는 컴포넌트 가져오기는 조금 어려울 것 같으니 이건 프리팹으로 처리해보자
+
         mainCamera = Camera.main;
 
         rb = GetComponent<Rigidbody2D>();
@@ -156,6 +167,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnAttack(InputValue value)     // 마우스 좌클릭 (공격)
+    {
+        if (isDashing) return;
+
+        isAttacking = value.Get<float>();       // 입력받는 버튼 값이 float 값.  그대로 받아온다
+
+
+
+
+    }
+    private void OnSkill(InputValue value)      // 마우스 우클릭 (스킬)
+    {
+
+    }
 
     // Update is called once per frame
     void Update()
