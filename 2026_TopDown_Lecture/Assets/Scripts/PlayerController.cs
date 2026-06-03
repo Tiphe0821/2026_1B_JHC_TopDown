@@ -49,7 +49,9 @@ public class PlayerController : MonoBehaviour
 
     [Header("무기 설정")]
     // 무기 구현
-    public GameObject weapon;       // 무기의 부모로 할당되어 있는 게임 오브젝트
+    public GameObject weapon;           // 리소스 발견으로 더이상 플레이어 스케일 조정 필요 X (새로운 빈 오브젝트로 대신하기)
+    public GameObject weaponPvot;       // 무기의 부모로 할당되어 있는 게임 오브젝트
+    public Animator weaponAnim;
     // 무기가 보는 방향 (왼쪽 오른쪽 정하기)
     public bool isLookRight = true;
     public bool isLookUp = true;
@@ -173,7 +175,10 @@ public class PlayerController : MonoBehaviour
 
         isAttacking = value.Get<float>();       // 입력받는 버튼 값이 float 값.  그대로 받아온다
 
-
+        if(isAttacking > 0.01f)
+        {
+            weaponAnim.SetTrigger("Attack");
+        }
 
 
     }
@@ -258,13 +263,13 @@ public class PlayerController : MonoBehaviour
 
         if (!isLookRight)
         {
-            transform.localScale = new Vector3(-1f, 1f, 1f);
-            weapon.transform.rotation = Quaternion.Euler(0f, 0f, - ((isLookUp) ? 1.0f : -1.0f) * Mathf.Rad2Deg * myWeaponAngle);
+            weapon.transform.localScale = new Vector3(-1f, 1f, 1f);
+            weaponPvot.transform.rotation = Quaternion.Euler(0f, 0f, - ((isLookUp) ? 1.0f : -1.0f) * Mathf.Rad2Deg * myWeaponAngle);
         }
         else
         {
-            transform.localScale = Vector3.one;
-            weapon.transform.rotation = Quaternion.Euler(0f, 0f, ((isLookUp) ? 1.0f : -1.0f) * Mathf.Rad2Deg * myWeaponAngle);
+            weapon.transform.localScale = Vector3.one;
+            weaponPvot.transform.rotation = Quaternion.Euler(0f, 0f, ((isLookUp) ? 1.0f : -1.0f) * Mathf.Rad2Deg * myWeaponAngle);
         }
 
     }
