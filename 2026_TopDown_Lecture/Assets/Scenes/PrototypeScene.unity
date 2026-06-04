@@ -660,6 +660,7 @@ GameObject:
   - component: {fileID: 211420088}
   - component: {fileID: 211420090}
   - component: {fileID: 211420091}
+  - component: {fileID: 211420092}
   m_Layer: 0
   m_Name: Enemy_Temp
   m_TagString: Enemy
@@ -749,7 +750,6 @@ MonoBehaviour:
   isAttacking: 0
   lastAttackTime: 0
   playerTransform: {fileID: 0}
-  attackRangeDisplayPvot: {fileID: 1381249768}
   attackRangeDisplay: {fileID: 487790528}
   attackCollider: {fileID: 979406840}
   rb: {fileID: 0}
@@ -813,6 +813,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &211420092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211420087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4029d10ea7f4bda43a22b1c011f2f879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  enemyHP: 2
 --- !u!1 &239312222
 GameObject:
   m_ObjectHideFlags: 0
@@ -3747,7 +3760,7 @@ GameObject:
   - component: {fileID: 1813372416}
   m_Layer: 0
   m_Name: AttackRange
-  m_TagString: Untagged
+  m_TagString: PlayerWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
