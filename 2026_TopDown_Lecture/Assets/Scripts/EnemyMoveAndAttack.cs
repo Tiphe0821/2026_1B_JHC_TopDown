@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class EnemyMoveAndAttack : MonoBehaviour
 {
+    // 플레이어랑 충돌 처리는 피하고 벽이랑은 충돌시키고 싶은데 어떻게 처리해야할지 모르겠다
+
     // public int behaviorMode = 0;    // 0 - 피격(살짝 밀려나기 & 공격 취소), 1 - 순찰 (루트 X, 랜덤 이동), 2 - 대기 (플레이어 공격 전 대기),3 - 공격 (플레이어 타게팅) (안써)
     // 사용 안해도 될것 같다
 
