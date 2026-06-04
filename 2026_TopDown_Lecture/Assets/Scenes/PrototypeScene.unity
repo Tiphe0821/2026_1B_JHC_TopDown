@@ -745,12 +745,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMoveAndAttack
   attackCooldown: 10
-  waitTime: 2.5
+  waitTime: 1.5
   currentWaitTime: 0
   isAttacking: 0
   lastAttackTime: 0
   playerTransform: {fileID: 0}
-  attackRangeDisplay: {fileID: 487790528}
+  attackRangeDisplay: {fileID: 1381249768}
   attackCollider: {fileID: 979406840}
   rb: {fileID: 0}
   sr: {fileID: 509406368}
@@ -1233,7 +1233,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &487790529
 Transform:
   m_ObjectHideFlags: 0
@@ -2681,7 +2681,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1381249769
 Transform:
   m_ObjectHideFlags: 0

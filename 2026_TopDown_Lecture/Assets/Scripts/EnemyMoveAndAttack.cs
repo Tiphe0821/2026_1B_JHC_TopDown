@@ -82,8 +82,15 @@ public class EnemyMoveAndAttack : MonoBehaviour
 
         if (playerDir.y > 0)
             isLookUp = true;
-
-        attackRangeDisplay.transform.rotation = Quaternion.Euler(0f, 0f, -((isLookUp) ? 1.0f : -1.0f) * Mathf.Rad2Deg * lookAngle);
+        
+        if(playerDir.x > 0)
+        {
+            attackRangeDisplay.transform.rotation = Quaternion.Euler(0f, 0f, ((isLookUp) ? 1.0f : -1.0f) * Mathf.Rad2Deg * lookAngle);
+        }
+        else
+        {
+            attackRangeDisplay.transform.rotation = Quaternion.Euler(0f, 0f, -((isLookUp) ? 1.0f : -1.0f) * Mathf.Rad2Deg * lookAngle);
+        }
 
         attackRangeDisplay.SetActive(true);
     }
@@ -121,11 +128,11 @@ public class EnemyMoveAndAttack : MonoBehaviour
 
         playerDir = new Vector2(playerTransform.position.x - this.transform.position.x, playerTransform.position.y - this.transform.position.y);
 
-        if(playerDir.x >0)      // 플레이어 보는거 쫒아서 보기
+        if(playerDir.x >0 && !isAttacking)      // 플레이어 보는거 쫒아서 보기
         {
             this.transform.localScale = Vector3.one;
         }
-        else
+        else if(playerDir.x < 0 && !isAttacking) 
         {
             this.transform.localScale = new Vector3(-1, 1, 1);
         }
