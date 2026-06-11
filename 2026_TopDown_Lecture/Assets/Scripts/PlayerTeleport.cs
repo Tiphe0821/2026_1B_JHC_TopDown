@@ -6,7 +6,7 @@ public class PlayerTeleport : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("들어왔다 trigger");
+        Debug.Log("들어왔다 텔레포트 trigger");
         if(collision.CompareTag("Player"))
         {
             collision.gameObject.transform.position = teleportPosition.position; 
@@ -15,7 +15,7 @@ public class PlayerTeleport : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("들어왔다 collider");
+        Debug.Log("들어왔다 텔레포트 콜리션 collider");
         if (collision.gameObject.CompareTag("Player"))
         {
             collision.gameObject.transform.position = teleportPosition.position;

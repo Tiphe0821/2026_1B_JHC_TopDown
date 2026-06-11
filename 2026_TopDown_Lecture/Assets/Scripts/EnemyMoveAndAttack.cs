@@ -8,7 +8,7 @@ public class EnemyMoveAndAttack : MonoBehaviour
     // 사용 안해도 될것 같다
 
     // 적 공격 설정
-    public float attackCooldown = 4.5f;        // 공격 쿨타임
+    public float attackCooldown = 1.5f;        // 공격 쿨타임
     public float waitTime = 1.0f;              // 공격 전 기다리는 시간 (2 대기)
     public float currentWaitTime = 0f;
     public bool isAttacking = false;           // 지금 공격중인가?
@@ -130,7 +130,7 @@ public class EnemyMoveAndAttack : MonoBehaviour
 
         playerDir = new Vector2(playerTransform.position.x - this.transform.position.x, playerTransform.position.y - this.transform.position.y);
 
-        if(playerDir.x >0 && !isAttacking)      // 플레이어 보는거 쫒아서 보기
+        if(playerDir.x >0 && !isAttacking)      // 플레이어 쫒아서 보기
         {
             this.transform.localScale = Vector3.one;
         }
