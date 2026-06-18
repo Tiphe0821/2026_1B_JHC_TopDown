@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,7 +21,13 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    
+
+    private void Start()
+    {
+        GetComponent<GameDataManager>().LoadJsonData();
+        FindAnyObjectByType<playerLv>().gameObject.GetComponent<TextMeshProUGUI>().text = "플레이어 레벨 : " + GetComponent<GameDataManager>().saveData.playerGameLevel;
+    }
+
     public void StartGame()
     {
         SceneManager.LoadScene(gameSceneName);
@@ -34,5 +41,14 @@ public class GameManager : MonoBehaviour
     public void GoTitle()
     {
         SceneManager.LoadScene(titleSceneName);
+        ChangeplayerLVBKGR();
+    }
+
+    public void ChangeplayerLVBKGR()
+    {
+        {
+            FindAnyObjectByType<playerLv>().gameObject.GetComponent<TextMeshProUGUI>().text = "플레이어 레벨 : " + GetComponent<GameDataManager>().saveData.playerGameLevel;
+
+        }
     }
 }
